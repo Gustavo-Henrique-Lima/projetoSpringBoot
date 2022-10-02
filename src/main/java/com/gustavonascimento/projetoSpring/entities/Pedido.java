@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.gustavonascimento.projetoSpring.entities.enums.StatusDoPedido;
 
 @Entity
 public class Pedido implements Serializable{
@@ -25,16 +26,17 @@ public class Pedido implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="idCliente")
 	private Usuario cliente;
-	
+	private Integer status;
 	public Pedido()
 	{
 	}
 
-	public Pedido(Long id, Instant hora, Usuario cliente) 
+	public Pedido(Long id, Instant hora, StatusDoPedido status,Usuario cliente) 
 	{
 		super();
 		this.id = id;
 		this.hora = hora;
+		setStatus(status);
 		this.cliente = cliente;
 	}
 
@@ -67,6 +69,19 @@ public class Pedido implements Serializable{
 	{
 		this.cliente = cliente;
 	}
+	
+	public StatusDoPedido getStatus() 
+	{
+		return StatusDoPedido.pegaValorETransformaEmStatus(status);
+	}
+
+	public void setStatus(StatusDoPedido status) 
+	{
+		if(status !=null)
+		{
+			this.status = status.getCode();
+		}
+	}
 
 	@Override
 	public int hashCode() 
@@ -86,5 +101,4 @@ public class Pedido implements Serializable{
 		Pedido other = (Pedido) obj;
 		return Objects.equals(id, other.id);
 	}
-	
 }
