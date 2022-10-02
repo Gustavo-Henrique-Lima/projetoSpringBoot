@@ -1,13 +1,18 @@
 package com.gustavonascimento.projetoSpring.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="tb_user")
@@ -21,7 +26,9 @@ public class Usuario implements Serializable{
 	private String email;
 	private String fone;
 	private String senha;
-	
+	@JsonIgnore
+	@OneToMany(mappedBy ="cliente")
+	private List<Pedido> pedidos=new ArrayList<>();
 	public Usuario()
 	{
 	}
@@ -84,6 +91,11 @@ public class Usuario implements Serializable{
 	public void setSenha(String senha) 
 	{
 		this.senha = senha;
+	}
+	
+	public List<Pedido> getPedidos() 
+	{
+		return pedidos;
 	}
 
 	@Override
