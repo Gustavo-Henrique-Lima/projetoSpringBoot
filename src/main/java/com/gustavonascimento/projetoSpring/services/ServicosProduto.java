@@ -24,4 +24,10 @@ public class ServicosProduto {
 		Optional<Produto>obj=repositorioProduto.findById(id);
 		return obj.get();
 	}
+	
+	public List<Produto> findByName(String nome)
+	{
+		List<Produto>obj=repositorioProduto.findByName(nome);
+		return obj.subList(0, obj.size());
+	}
 }

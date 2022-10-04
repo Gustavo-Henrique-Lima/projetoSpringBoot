@@ -31,4 +31,11 @@ public class ProdutoResource {
 		Produto obj=servicosProduto.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
+	
+	@GetMapping(value= 	"nome={nome}")
+	public ResponseEntity<List<Produto>>findByName(@PathVariable String nome)
+	{
+		List<Produto> produtos=servicosProduto.findByName(nome);
+		return ResponseEntity.ok().body(produtos);
+	}
 }
