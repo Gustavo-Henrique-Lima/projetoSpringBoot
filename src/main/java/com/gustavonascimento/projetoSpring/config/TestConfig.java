@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.gustavonascimento.projetoSpring.entities.Categoria;
 import com.gustavonascimento.projetoSpring.entities.Pedido;
+import com.gustavonascimento.projetoSpring.entities.Produto;
 import com.gustavonascimento.projetoSpring.entities.Usuario;
 import com.gustavonascimento.projetoSpring.entities.enums.StatusDoPedido;
 import com.gustavonascimento.projetoSpring.repositorios.RepositorioCategoria;
 import com.gustavonascimento.projetoSpring.repositorios.RepositorioPedido;
+import com.gustavonascimento.projetoSpring.repositorios.RepositorioProduto;
 import com.gustavonascimento.projetoSpring.repositorios.RepositorioUsuario;
 
 @Configuration
@@ -25,6 +27,8 @@ public class TestConfig implements CommandLineRunner{
 	private RepositorioPedido pedidoRepositorio;
 	@Autowired
 	private RepositorioCategoria categoriaRepositorio;
+	@Autowired
+	private RepositorioProduto produtoRepositorio;
 	@Override
 	public void run(String... args) throws Exception 
 	{
@@ -32,6 +36,13 @@ public class TestConfig implements CommandLineRunner{
 		Categoria cat2 = new Categoria(null, "Livros"); 
 		Categoria cat3 = new Categoria(null, "Computadores"); 
 
+		Produto pr1 = new Produto(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, ""); 
+		Produto pr2 = new Produto(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, ""); 
+		Produto pr3 = new Produto(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, ""); 
+		Produto pr4 = new Produto(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, ""); 
+		Produto pr5 = new Produto(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, ""); 
+
+		produtoRepositorio.saveAll(Arrays.asList(pr1,pr2,pr3,pr4,pr5));
 		categoriaRepositorio.saveAll(Arrays.asList(cat1,cat2,cat3));
 		
 		Usuario u1=new Usuario(null, "Gustavo","gustavo@gmail.com", "8199", "123");
