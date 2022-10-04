@@ -19,16 +19,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Usuario implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String nome;
+	
 	private String email;
+	
 	private String fone;
+	
 	private String senha;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy ="cliente")
 	private List<Pedido> pedidos=new ArrayList<>();
+	
 	public Usuario()
 	{
 	}

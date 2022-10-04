@@ -18,13 +18,19 @@ import javax.persistence.ManyToMany;
 public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String nome;
+	
 	private String descricao;
+	
 	private Double preco;
+	
 	private String imgUrl;
+	
 	/*
 	 * Usando set para garantir que não haja repetições de categorias nos produtos
 	 */
@@ -32,7 +38,8 @@ public class Produto implements Serializable {
 	@JoinTable(name = "Produto_Categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private Set<Categoria> categorias = new HashSet<>();
 
-	public Produto() {
+	public Produto() 
+	{
 	}
 
 	public Produto(Long id, String nome, String descricao, Double preco, String imgUrl) {

@@ -2,7 +2,9 @@ package com.gustavonascimento.projetoSpring.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gustavonascimento.projetoSpring.entities.enums.StatusDoPedido;
@@ -21,12 +24,19 @@ public class Pedido implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy'T'HH:mm:ss'Z'",timezone = "GMT")
 	private Instant hora;
+	
 	@ManyToOne
 	@JoinColumn(name="idCliente")
 	private Usuario cliente;
+	
 	private Integer status;
+	
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<ItemPedido> itens=new HashSet<>();
+	
 	public Pedido()
 	{
 	}
@@ -82,7 +92,10 @@ public class Pedido implements Serializable{
 			this.status = status.getCode();
 		}
 	}
-
+	public Set<ItemPedido> getPedidos()
+	{
+		return itens;
+	}
 	@Override
 	public int hashCode() 
 	{

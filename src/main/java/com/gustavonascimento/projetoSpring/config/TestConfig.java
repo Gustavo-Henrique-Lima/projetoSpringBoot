@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.gustavonascimento.projetoSpring.entities.Categoria;
+import com.gustavonascimento.projetoSpring.entities.ItemPedido;
 import com.gustavonascimento.projetoSpring.entities.Pedido;
 import com.gustavonascimento.projetoSpring.entities.Produto;
 import com.gustavonascimento.projetoSpring.entities.Usuario;
 import com.gustavonascimento.projetoSpring.entities.enums.StatusDoPedido;
 import com.gustavonascimento.projetoSpring.repositorios.RepositorioCategoria;
+import com.gustavonascimento.projetoSpring.repositorios.RepositorioItemPedido;
 import com.gustavonascimento.projetoSpring.repositorios.RepositorioPedido;
 import com.gustavonascimento.projetoSpring.repositorios.RepositorioProduto;
 import com.gustavonascimento.projetoSpring.repositorios.RepositorioUsuario;
@@ -21,14 +23,23 @@ import com.gustavonascimento.projetoSpring.repositorios.RepositorioUsuario;
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner{
+	
 	@Autowired
 	private RepositorioUsuario usuarioRepositorio;
+	
 	@Autowired
 	private RepositorioPedido pedidoRepositorio;
+	
 	@Autowired
 	private RepositorioCategoria categoriaRepositorio;
+	
 	@Autowired
 	private RepositorioProduto produtoRepositorio;
+	
+	@Autowired
+	private RepositorioItemPedido itemPedidoRepositorio;
+	
+	
 	@Override
 	public void run(String... args) throws Exception 
 	{
@@ -59,7 +70,15 @@ public class TestConfig implements CommandLineRunner{
 		Pedido p1= new Pedido(null, Instant.parse("2022-10-02T11:45:08Z"),StatusDoPedido.AGUARDANDO_PAGAMENTO ,u1);
 		Pedido p2= new Pedido(null, Instant.parse("2022-10-01T11:30:45Z"), StatusDoPedido.ENVIADO,u2);
 		Pedido p3= new Pedido(null, Instant.parse("2022-09-28T10:30:15Z"), StatusDoPedido.PAGO,u1);
+		
 		usuarioRepositorio.saveAll(Arrays.asList(u1,u2));
 		pedidoRepositorio.saveAll(Arrays.asList(p1,p2,p3));
+		
+		ItemPedido oi1 = new ItemPedido(p1, pr1, 2, pr1.getPreco()); 
+		ItemPedido oi2 = new ItemPedido(p1, pr3, 1, pr3.getPreco()); 
+		ItemPedido oi3 = new ItemPedido(p2, pr3, 2, pr3.getPreco()); 
+		ItemPedido oi4 = new ItemPedido(p3, pr5, 2, pr5.getPreco()); 
+
+		itemPedidoRepositorio.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 	}
 }
