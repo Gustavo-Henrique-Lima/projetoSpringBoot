@@ -9,10 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
-public class Produto implements Serializable{
+//@Table(name="")
+public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -22,16 +25,17 @@ public class Produto implements Serializable{
 	private String descricao;
 	private Double preco;
 	private String imgUrl;
-	/*Usando set para garantir que não haja repetições de categorias nos produtos*/
-	@Transient
-	private Set<Categoria> categorias= new HashSet<>();
-	
-	public Produto()
-	{
+	/*
+	 * Usando set para garantir que não haja repetições de categorias nos produtos
+	 */
+	@ManyToMany
+	@JoinTable(name = "Produto_Categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+	private Set<Categoria> categorias = new HashSet<>();
+
+	public Produto() {
 	}
 
-	public Produto(Long id, String nome, String descricao, Double preco, String imgUrl) 
-	{
+	public Produto(Long id, String nome, String descricao, Double preco, String imgUrl) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -40,58 +44,47 @@ public class Produto implements Serializable{
 		this.imgUrl = imgUrl;
 	}
 
-	public Long getId() 
-	{
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) 
-	{
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getNome() 
-	{
+	public String getNome() {
 		return nome;
 	}
 
-	public void setNome(String nome) 
-	{
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public String getDescricao() 
-	{
+	public String getDescricao() {
 		return descricao;
 	}
 
-	public void setDescricao(String descricao) 
-	{
+	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 
-	public Double getPreco() 
-	{
+	public Double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Double preco) 
-	{
+	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
 
-	public String getImgUrl() 
-	{
+	public String getImgUrl() {
 		return imgUrl;
 	}
 
-	public void setImgUrl(String imgUrl) 
-	{
+	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
 
-	public Set<Categoria> getCategorias() 
-	{
+	public Set<Categoria> getCategorias() {
 		return categorias;
 	}
 
@@ -101,8 +94,7 @@ public class Produto implements Serializable{
 	}
 
 	@Override
-	public boolean equals(Object obj) 
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
