@@ -113,6 +113,16 @@ public class Pedido implements Serializable{
 		this.pagamento = pagamento;
 	}
 
+	public Double getTotalPedido()
+	{
+		double sum=0.0;
+		for(ItemPedido x : itens)
+		{
+			sum+=x.getSubTotal();
+		}
+		return sum;
+	}
+	
 	@Override
 	public int hashCode() 
 	{

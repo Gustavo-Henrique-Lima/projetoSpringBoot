@@ -12,6 +12,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Pagamento implements Serializable{
@@ -27,6 +28,7 @@ public class Pagamento implements Serializable{
 	
 	@OneToOne
 	@MapsId
+	@JsonIgnore
 	private Pedido pedido;
 	
 	public Pagamento()
