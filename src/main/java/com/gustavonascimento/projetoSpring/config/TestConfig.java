@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.gustavonascimento.projetoSpring.entities.Categoria;
 import com.gustavonascimento.projetoSpring.entities.ItemPedido;
+import com.gustavonascimento.projetoSpring.entities.Pagamento;
 import com.gustavonascimento.projetoSpring.entities.Pedido;
 import com.gustavonascimento.projetoSpring.entities.Produto;
 import com.gustavonascimento.projetoSpring.entities.Usuario;
@@ -80,5 +81,9 @@ public class TestConfig implements CommandLineRunner{
 		ItemPedido oi4 = new ItemPedido(p3, pr5, 2, pr5.getPreco()); 
 
 		itemPedidoRepositorio.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		
+		Pagamento pag1=new Pagamento(null,Instant.parse("2022-10-02T13:45:08Z"),p1);
+		p1.setPagamento(pag1);
+		pedidoRepositorio.save(p1);
 	}
 }
