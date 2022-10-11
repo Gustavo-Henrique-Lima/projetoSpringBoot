@@ -3,6 +3,8 @@ package com.gustavonascimento.projetoSpring.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -52,9 +54,16 @@ public class ServicosUsuario {
 	
 	public Usuario atualizar(Long id,Usuario obj)
 	{
-		Usuario entity =repositorioUsuario.getReferenceById(id);
-		atualizarDados(entity,obj);
-		return repositorioUsuario.save(entity);
+		try
+		{
+			Usuario entity =repositorioUsuario.getReferenceById(id);
+			atualizarDados(entity,obj);
+			return repositorioUsuario.save(entity);
+		}
+		catch(EntityNotFoundException e)
+		{
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void atualizarDados(Usuario entity, Usuario obj) 
